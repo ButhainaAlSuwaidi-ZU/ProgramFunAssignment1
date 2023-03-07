@@ -1,0 +1,136 @@
+# since we have two attributes that are ENUM types, we need to make classes
+# for them
+class shopSection:
+    LUBRICATION = 1
+    TIRES = 2
+    OIL = 3
+
+class assistantsUsed:
+    NONE = 0
+    ONE = 1
+    TWO = 2
+    THREE_OR_MORE = 3
+
+# Services class with setters and getters
+class Services:
+    def __init__(self, diagnostics=False, oilChange=False, partsReplaced=0, tiresReplaced=0, sparkPlugsReplaced=0):
+        self.diagnostics = diagnostics
+        self.oilChange = oilChange
+        self.partsReplaced = partsReplaced
+        self.tiresReplaced = tiresReplaced
+        self.sparkPlugsReplaced = sparkPlugsReplaced
+
+    def set_diagnostics(self, value):
+        self.diagnostics = value
+    def get_diagnostics(self):
+        return self.diagnostics
+
+    def set_oilChange(self, value):
+        self.oilChange = value
+    def get_oilChange(self):
+        return self.oilChange
+
+    def set_partsReplaced(self, value):
+        self.partsReplaced = value
+    def get_partsReplaced(self):
+        return self.partsReplaced
+
+    def set_tiresReplaced(self, value):
+        self.tiresReplaced = value
+    def get_tiresReplaced(self):
+        return self.tiresReplaced
+
+    def set_sparkPlugsReplaced(self, value):
+        self.sparkPlugsReplaced = value
+    def get_sparkPlugsReplaced(self):
+        return self.sparkPlugsReplaced
+
+
+# this is the mechanic class with all the setters and getters
+# we also have one more servicesDone section to show what has been completed
+# by each mechanic
+class Mechanic:
+    def __init__(self, mechanicFirstName, mechanicLastName, mechanicID, shopSection, assistantsUsed):
+        self.mechanicFirstName = mechanicFirstName
+        self.mechanicLastName = mechanicLastName
+        self.mechanicID = mechanicID
+        self.shopSection = shopSection
+        self.assistantsUsed = assistantsUsed
+        self.servicesDone = []
+
+    def set_mechanicFirstName(self, mechanicFirstName):
+        self.mechanicFirstName = mechanicFirstName
+    def get_mechanicFirstName(self):
+        return self.mechanicFirstName
+
+    def set_mechanicLastName(self, mechanicLastName):
+        self.mechanicLastName = mechanicLastName
+    def get_mechanicLastName(self):
+        return self.mechanicLastName
+
+    def set_mechanicID(self, mechanicID):
+        self.mechanicID = mechanicID
+    def get_mechanicID(self):
+        return self.mechanicID
+
+    def set_shopSection(self, shopSection):
+        self.shopSection = shopSection
+    def get_shopSection(self):
+        return self.shopSection
+
+    def set_assistantsUsed(self, assistantsUsed):
+        self.assistantsUsed = assistantsUsed
+    def get_assistantsUsed(self):
+        return self.assistantsUsed
+
+    #we append the service that the mechanic has done to the servicesDone
+    # this is so we can give each mechanic a list of services and connect the classes
+    def add_service_done(self, service):
+        self.servicesDone.append(service)
+
+    #now we do this for all the services so we can see what each mechanic has done
+    #we use the get functions we defined to show the display the information
+    def print_services(self):
+        print("Services done by", self.mechanicFirstName, self.mechanicLastName, "with ID", self.mechanicID, "in Section", self.get_shopSection(), "with", self.get_assistantsUsed(), "assistant(s):")
+        print("The services that were completed are:")
+        for service in self.servicesDone:
+            print("Diagnostics: ", service.get_diagnostics())
+            print("Oil Change: ", service.get_oilChange())
+            print("Parts Replaced: ", service.get_partsReplaced())
+            print("Tires Replaced: ", service.get_tiresReplaced())
+            print("Spark Plugs Replaced", service.get_sparkPlugsReplaced())
+
+# here we created instances/objects of some mechanics
+mechanic1 = Mechanic("Bob", "Belcher", "01D", shopSection.LUBRICATION, assistantsUsed.ONE)
+mechanic2 = Mechanic("Linda", "Belcher", "02F", shopSection.TIRES, assistantsUsed.TWO)
+mechanic3 = Mechanic("Spongebob", "Squarepants", "23G", shopSection.OIL, assistantsUsed.THREE_OR_MORE)
+
+# adding random services done by each mechanic
+# as you can see we used the set function to set and change what has been done
+service1 = Services()
+service1.set_diagnostics(True)
+service1.set_oilChange(True)
+service1.set_partsReplaced(12)
+service1.set_tiresReplaced(41)
+service1.set_sparkPlugsReplaced(8)
+mechanic1.add_service_done(service1)
+
+service2 = Services()
+service2.set_oilChange(True)
+service2.set_partsReplaced(7)
+service2.set_tiresReplaced(2)
+service2.set_sparkPlugsReplaced(0)
+mechanic2.add_service_done(service2)
+
+service3 = Services()
+service3.set_diagnostics(True)
+service3.set_partsReplaced(1)
+service3.set_tiresReplaced(14)
+service3.set_sparkPlugsReplaced(4)
+mechanic3.add_service_done(service3)
+
+mechanic1.print_services()
+mechanic2.print_services()
+mechanic3.print_services()
+
+
