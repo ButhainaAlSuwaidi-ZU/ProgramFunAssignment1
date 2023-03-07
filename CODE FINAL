@@ -1,0 +1,299 @@
+# since we have two attributes that are ENUM types, we need to make classes
+# for them
+
+from enum import Enum
+
+'''ENUMS '''
+class shopSection(Enum):
+    LUBRICATION = 1
+    TIRES = 2
+    OIL = 3
+
+class assistantsUsed(Enum):
+    NONE = 0
+    ONE = 1
+    TWO = 2
+    THREE_OR_MORE = 3
+
+''' Services '''
+# Services class with setters and getters
+class Services:
+    def __init__(self, diagnostics=False, oilChange=False, partsReplaced=0, tiresReplaced=0, sparkPlugsReplaced=0):
+        self.diagnostics = diagnostics
+        self.oilChange = oilChange
+        self.partsReplaced = partsReplaced
+        self.tiresReplaced = tiresReplaced
+        self.sparkPlugsReplaced = sparkPlugsReplaced
+
+    def set_diagnostics(self, value):
+        self.diagnostics = value
+    def get_diagnostics(self):
+        return self.diagnostics
+
+    def set_oilChange(self, value):
+        self.oilChange = value
+    def get_oilChange(self):
+        return self.oilChange
+
+    def set_partsReplaced(self, value):
+        self.partsReplaced = value
+    def get_partsReplaced(self):
+        return self.partsReplaced
+
+    def set_tiresReplaced(self, value):
+        self.tiresReplaced = value
+    def get_tiresReplaced(self):
+        return self.tiresReplaced
+
+    def set_sparkPlugsReplaced(self, value):
+        self.sparkPlugsReplaced = value
+    def get_sparkPlugsReplaced(self):
+        return self.sparkPlugsReplaced
+
+'''Mechanics'''
+# this is the mechanic class with all the setters and getters
+# we also have one more servicesDone section to show what has been completed
+# by each mechanic
+class Mechanic:
+    def __init__(self, mechanicFirstName, mechanicLastName, mechanicID, shopSection, assistantsUsed):
+        self.mechanicFirstName = mechanicFirstName
+        self.mechanicLastName = mechanicLastName
+        self.mechanicID = mechanicID
+        self.shopSection = shopSection
+        self.assistantsUsed = assistantsUsed
+        self.servicesDone = []
+
+    def set_mechanicFirstName(self, mechanicFirstName):
+        self.mechanicFirstName = mechanicFirstName
+    def get_mechanicFirstName(self):
+        return self.mechanicFirstName
+
+    def set_mechanicLastName(self, mechanicLastName):
+        self.mechanicLastName = mechanicLastName
+    def get_mechanicLastName(self):
+        return self.mechanicLastName
+
+    def set_mechanicID(self, mechanicID):
+        self.mechanicID = mechanicID
+    def get_mechanicID(self):
+        return self.mechanicID
+
+    def set_shopSection(self, shopSection):
+        self.shopSection = shopSection
+    def get_shopSection(self):
+        return self.shopSection
+
+    def set_assistantsUsed(self, assistantsUsed):
+        self.assistantsUsed = assistantsUsed
+    def get_assistantsUsed(self):
+        return self.assistantsUsed
+
+    #we append the service that the mechanic has done to the servicesDone
+    # this is so we can give each mechanic a list of services and connect the classes
+    def add_serviceDone(self, service):
+        self.servicesDone.append(service)
+
+    #now we do this for all the services so we can see what each mechanic has done
+    #we use the get functions we defined to show the display the information
+    def print_services(self):
+        print("Services done by", self.mechanicFirstName, self.mechanicLastName, "with ID", self.mechanicID, "in Section", self.get_shopSection(), "with", self.get_assistantsUsed(), "assistant(s):")
+        print("The services that were completed are:")
+        for service in self.servicesDone:
+            print("Diagnostics: ", service.get_diagnostics())
+            print("Oil Change: ", service.get_oilChange())
+            print("Parts Replaced: ", service.get_partsReplaced())
+            print("Tires Replaced: ", service.get_tiresReplaced())
+            print("Spark Plugs Replaced", service.get_sparkPlugsReplaced())
+
+# here we created instances/objects of some mechanics
+mechanic1 = Mechanic("Bob", "Belcher", "01D", shopSection.LUBRICATION, assistantsUsed.ONE)
+mechanic2 = Mechanic("Linda", "Belcher", "02F", shopSection.TIRES, assistantsUsed.TWO)
+mechanic3 = Mechanic("Spongebob", "Squarepants", "23G", shopSection.OIL, assistantsUsed.THREE_OR_MORE)
+
+# adding random services done by each mechanic
+# as you can see we used the set function to set and change what has been done
+service1 = Services()
+service1.set_diagnostics(True)
+service1.set_oilChange(True)
+service1.set_partsReplaced(12)
+service1.set_tiresReplaced(41)
+service1.set_sparkPlugsReplaced(8)
+mechanic1.add_serviceDone(service1)
+
+service2 = Services()
+service2.set_oilChange(True)
+service2.set_partsReplaced(7)
+service2.set_tiresReplaced(2)
+service2.set_sparkPlugsReplaced(0)
+mechanic2.add_serviceDone(service2)
+
+service3 = Services()
+service3.set_diagnostics(True)
+service3.set_partsReplaced(1)
+service3.set_tiresReplaced(14)
+service3.set_sparkPlugsReplaced(4)
+mechanic3.add_serviceDone(service3)
+
+mechanic1.print_services()
+print()
+mechanic2.print_services()
+print()
+mechanic3.print_services()
+
+'''Customer and Mechanic Info'''
+
+#again we create a class for the customer
+#we create all the setters and getters
+class Customer:
+    def __init__(self, firstName, lastName, email, phoneNumber, customerID):
+        self.firstName = firstName
+        self.lastName = lastName
+        self.email = email
+        self.phoneNumber = phoneNumber
+        self.customerID = customerID
+        self.mechanic = None
+
+    def set_firstName(self, firstName):
+        self.firstName = firstName
+    def get_firstName(self):
+        return self.firstName
+
+    def set_lastName(self, lastName):
+        self.lastName = lastName
+    def get_lastName(self):
+        return self.lastName
+
+    def set_email(self, email):
+        self.email = email
+    def get_email(self):
+        return self.email
+
+    def set_phoneNumber(self, phoneNumber):
+        self.phoneNumber = phoneNumber
+    def get_phoneNumber(self):
+        return self.phoneNumber
+
+    def set_customerID(self, customerID):
+        self.customerID = customerID
+    def get_customerID(self):
+        return self.customerID
+
+#this is so we can see all the customer info
+    def displayCustomrInfo(self):
+        print("Customer's Full Name:", self.firstName, self.lastName)
+        print("Email:", self.email)
+        print("Phone Number:", self.phoneNumber)
+        print("Customer ID:", self.customerID)
+
+#this is so we can set a mechanic to a customer
+    def set_mechanic(self, mechanic):
+        self.mechanic = mechanic
+    def get_mechanic(self):
+        return self.mechanic
+
+    def displayMechanicInfo(self):
+        if self.mechanic:
+            print("The mechanic assigned to", self.firstName, self.lastName, "with customer ID", self.customerID, "is",
+                  self.mechanic.get_mechanicFirstName(), self.mechanic.get_mechanicLastName())
+        else:
+            print("Currently, there is no mechanic assigned for", self.firstName, self.lastName, "with customer ID",
+                  self.customerID)
+
+
+#Here are some customers based on Spongebob!
+customer1 = Customer("Patrick", "Star", "mystarshinesthebrightest@bikinibottom.com", 3998833, "C01")
+customer2 = Customer("Squidward", "Tentacles", "myartisbetterthanyourart@bikinibottom.com", 122114455, "C04")
+customer3 = Customer("Plankton", "Plonkton", "whereisthekrabbypatty12@bikinibottom.com", 8822123, "C018")
+customer4 = Customer("Sandy", "Cheaks", "sciencerules@bikinibottom.com", 98765678, "C048")
+
+#here we are just assigning some mechanics so the customers
+customer1.set_mechanic(mechanic1)
+customer2.set_mechanic(mechanic3)
+customer3.set_mechanic(mechanic2)
+
+#now we are using our display mechanic infor function to show which customer has which mechanic
+customer1.displayMechanicInfo()
+customer2.displayMechanicInfo()
+customer3.displayMechanicInfo()
+customer4.displayMechanicInfo()
+print()
+
+#and just to check, we display our customer info without a mechanic
+customer1.displayCustomrInfo()
+print()
+customer2.displayCustomrInfo()
+print()
+customer3.displayCustomrInfo()
+
+'''Vehicles'''
+#setting the enumerators for the last class
+# we have one for tire types and the other for the amount of doors
+
+class TireType(Enum):
+    WINTER = 1
+    SUMMER = 2
+
+
+class DoorNumber(Enum):
+    TWO = 1
+    FOUR = 2
+    NONE = 3
+    OTHER = 4
+
+#making a vehicle class with setters and getters
+class Vehicle:
+    def __init__(self, vehicleType, vehicleColour, vehicleTires, vehicleDoors, vehicleID):
+        self.__vehicleType = vehicleType
+        self.__vehicleColour = vehicleColour
+        self.__vehicleTires = vehicleTires
+        self.__vehicleDoors = vehicleDoors
+        self.__vehicleID = vehicleID
+
+    def getVehicleType(self):
+        return self.__vehicleType
+    def setVehicleType(self, vehicleType):
+        self.__vehicleType = vehicleType
+
+    def getVehicleColour(self):
+        return self.__vehicleColour
+    def setVehicleColour(self, vehicleColour):
+        self.__vehicleColour = vehicleColour
+
+    def getVehicleTires(self):
+        return self.__vehicleTires
+    def setVehicleTires(self, vehicleTires):
+        self.__vehicleTires = vehicleTires
+
+    def getVehicleDoors(self):
+        return self.__vehicleDoors
+    def setVehicleDoors(self, vehicleDoors):
+        self.__vehicleDoors = vehicleDoors
+
+    def getVehicleID(self):
+        return self.__vehicleID
+    def setVehicleID(self, vehicleID):
+        self.__vehicleID = vehicleID
+
+#so we can display the info for the vehicle
+    def displayVehicleInfo(self):
+        print("Vehicle Type: ", self.getVehicleType())
+        print("Vehicle Colour: ", self.getVehicleColour())
+        print("Vehicle Tires: ", self.getVehicleTires())
+        print("Vehicle Doors: ", self.getVehicleDoors())
+        print("Vehicle ID: ", self.getVehicleID())
+
+
+# a few vehicles (objects)
+vehicle1 = Vehicle("Suburu 2011", "black", TireType.SUMMER, DoorNumber.FOUR, "V12")
+vehicle2 = Vehicle("Ford 2010", "yellow", TireType.WINTER, DoorNumber.TWO, "V78")
+vehicle3 = Vehicle("Yamaha 2019", "green", TireType.SUMMER, DoorNumber.NONE, "V198")
+
+#printing the vehicles
+print()
+vehicle1.displayVehicleInfo()
+print()
+vehicle2.displayVehicleInfo()
+print()
+vehicle3.displayVehicleInfo()
+
+
