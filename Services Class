@@ -1,0 +1,40 @@
+#creating a class and initializing it with all our attributes
+class Services:
+    def __init__(self, diagnostics=False, oilChange=False, partsReplaced=0, tiresReplaced=0, sparkPlugsReplaced=0):
+        self.diagnostics = diagnostics
+        self.oilChange = oilChange
+        self.partsReplaced = partsReplaced
+        self.tiresReplaced = tiresReplaced
+        self.sparkPlugsReplaced = sparkPlugsReplaced
+
+#we are defining our setters and getters for each attribute so we can change and 
+#display the information in a cleaner and easier way
+    def set_diagnostics(self, value):
+        self.diagnostics = value
+
+    def get_diagnostics(self):
+        return self.diagnostics
+
+    def set_oilChange(self, value):
+        self.oilChange = value
+
+    def get_oilChange(self):
+        return self.oilChange
+
+    def set_partsReplaced(self, value):
+        self.partsReplaced = value
+
+    def get_partsReplaced(self):
+        return self.partsReplaced
+
+    def set_tiresReplaced(self, value):
+        self.tiresReplaced = value
+
+    def get_tiresReplaced(self):
+        return self.tiresReplaced
+
+    def set_sparkPlugsReplaced(self, value):
+        self.sparkPlugsReplaced = value
+
+    def get_sparkPlugsReplaced(self):
+        return self.sparkPlugsReplaced
